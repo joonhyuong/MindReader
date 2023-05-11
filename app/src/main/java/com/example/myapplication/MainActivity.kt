@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
         title=findViewById(R.id.title)
         contextEditText=findViewById(R.id.contextEditText)
 
-        title.text = ""
+        title.text = "달력 일기장"
 
         calendarView.setOnDateChangeListener { view, year, month, dayOfMonth ->
             diaryTextView.visibility = View.VISIBLE
