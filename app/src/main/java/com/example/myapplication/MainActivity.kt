@@ -1,6 +1,7 @@
 package com.example.myapplication
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import java.io.FileInputStream
 import java.io.FileOutputStream
 
@@ -20,27 +21,29 @@ class MainActivity : AppCompatActivity() {
     lateinit var str: String
     lateinit var calendarView: CalendarView
     lateinit var updateBtn: Button
-    lateinit var deleteBtn:Button
-    lateinit var saveBtn:Button
+    lateinit var deleteBtn: Button
+    lateinit var saveBtn: Button
     lateinit var diaryTextView: TextView
-    lateinit var diaryContent:TextView
-    lateinit var title:TextView
+    lateinit var diaryContent: TextView
+    lateinit var title: TextView
     lateinit var contextEditText: EditText
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         // UI값 생성
-        calendarView=findViewById(R.id.calendarView)
-        diaryTextView=findViewById(R.id.diaryTextView)
-        saveBtn=findViewById(R.id.saveBtn)
-        deleteBtn=findViewById(R.id.deleteBtn)
-        updateBtn=findViewById(R.id.updateBtn)
-        diaryContent=findViewById(R.id.diaryContent)
-        title=findViewById(R.id.title)
-        contextEditText=findViewById(R.id.contextEditText)
+        calendarView = findViewById(R.id.calendarView)
+        diaryTextView = findViewById(R.id.diaryTextView)
+        saveBtn = findViewById(R.id.saveBtn)
+        deleteBtn = findViewById(R.id.deleteBtn)
+        updateBtn = findViewById(R.id.updateBtn)
+        diaryContent = findViewById(R.id.diaryContent)
+        title = findViewById(R.id.title)
+        contextEditText = findViewById(R.id.contextEditText)
 
 
 
@@ -70,10 +73,10 @@ class MainActivity : AppCompatActivity() {
 
     // 달력 내용 조회, 수정
     fun checkDay(cYear: Int, cMonth: Int, cDay: Int, userID: String) {
-        //저장할 파일 이름설정
+
         fname = "" + userID + cYear + "-" + (cMonth + 1) + "" + "-" + cDay + ".txt"
 
-        var fileInputStream: FileInputStream
+        val fileInputStream: FileInputStream
         try {
             fileInputStream = openFileInput(fname)
             val fileData = ByteArray(fileInputStream.available())
@@ -121,7 +124,7 @@ class MainActivity : AppCompatActivity() {
     // 달력 내용 제거
     @SuppressLint("WrongConstant")
     fun removeDiary(readDay: String?) {
-        var fileOutputStream: FileOutputStream
+        val fileOutputStream: FileOutputStream
         try {
             fileOutputStream = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS)
             val content = ""
@@ -136,7 +139,7 @@ class MainActivity : AppCompatActivity() {
     // 달력 내용 추가
     @SuppressLint("WrongConstant")
     fun saveDiary(readDay: String?) {
-        var fileOutputStream: FileOutputStream
+        val fileOutputStream: FileOutputStream
         try {
             fileOutputStream = openFileOutput(readDay, MODE_NO_LOCALIZED_COLLATORS)
             val content = contextEditText.text.toString()
@@ -146,4 +149,8 @@ class MainActivity : AppCompatActivity() {
             e.printStackTrace()
         }
     }
-}
+
+
+
+
+    }
