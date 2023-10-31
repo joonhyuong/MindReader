@@ -43,9 +43,15 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.9.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    // app/build.gradle 파일에 의존성을 추가합니다.
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+
     testImplementation 'junit:junit:4.13.2'
     //라이브러리 등록
     implementation 'com.github.bumptech.glide:glide:4.15.1'
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1' // OkHttp 버전은 필요에 따라 조정
 
 
 
