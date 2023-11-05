@@ -18,15 +18,47 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.calendertest.databinding.ActivityImgBinding
 import android.provider.MediaStore
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 class ImgActivity : AppCompatActivity() {
     private lateinit var binding: ActivityImgBinding
+    private lateinit var navigationView: BottomNavigationView
+
     private var selectedImageUri: Uri? = null // 이미지 Uri를 저장할 변수
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityImgBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        navigationView = findViewById(R.id.navigationView)
+
+        navigationView.setOnNavigationItemSelectedListener { item ->
+            when (item.itemId) {
+                R.id.calenderFragment -> {
+                    val intent = Intent(this, MainActivity::class.java)
+                    startActivity(intent)
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.homeFragment -> {
+                    // "히스토리" 아이템을 처리하는 코드를 추가하세요.
+                    return@setOnNavigationItemSelectedListener true
+                }
+                R.id.myPageFragment -> {
+                    // "설정" 아이템을 처리하는 코드를 추가하세요.
+                    return@setOnNavigationItemSelectedListener true
+                }
+            }
+            false
+        }
+
+        binding.cameraBtn.setOnClickListener{
+            val intent = Intent(this, CameraActivity::class.java)
+            startActivity(intent)
+        }
+
+
 
         // 버튼 이벤트: 갤러리 호출
         binding.galleryBtn.setOnClickListener {

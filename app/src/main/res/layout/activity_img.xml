@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <include layout="@layout/bottom_navigation_layout" />
+
 
     <Button
         android:id="@+id/galleryBtn2"
@@ -18,6 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.888" />
+
 
     <Button
         android:id="@+id/galleryBtn"
@@ -53,5 +56,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/galleryBtn" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
