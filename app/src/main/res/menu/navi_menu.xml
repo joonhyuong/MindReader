@@ -4,16 +4,19 @@
     <item
         android:id="@+id/calenderFragment"
         android:title="캘린더"
+        android:fontFamily="@font/skybori"
         android:icon="@drawable/ic_calendar_month"/>
 
     <item
         android:id="@+id/homeFragment"
         android:title="히스토리"
+        android:fontFamily="@font/skybori"
         android:icon="@drawable/ic_history"/>
 
     <item
         android:id="@+id/myPageFragment"
         android:title="설정"
+        android:fontFamily="@font/skybori"
         android:icon="@drawable/ic_setting"/>
 
 </menu>

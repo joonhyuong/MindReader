@@ -26,9 +26,12 @@
 
     <Button
         android:id="@+id/imgBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="38dp"
         android:layout_marginTop="131dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/skybori"
+        android:textSize="20sp"
         android:text="일기 사진"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/textBtn"
@@ -39,10 +42,13 @@
 
     <Button
         android:id="@+id/textBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="95dp"
+        android:layout_height="37dp"
         android:layout_marginStart="119dp"
         android:layout_marginTop="131dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/skybori"
+        android:textSize="20sp"
         android:text="수기 입력"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

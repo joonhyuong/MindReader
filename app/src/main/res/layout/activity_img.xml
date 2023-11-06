@@ -4,14 +4,20 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <include layout="@layout/bottom_navigation_layout" />
 
+
+    <include
+        layout="@layout/bottom_navigation_layout"
+        tools:layout_editor_absoluteX="0dp"
+        tools:layout_editor_absoluteY="-16dp" />
 
     <Button
         android:id="@+id/galleryBtn2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="117dp"
+        android:layout_height="47dp"
         android:layout_gravity="center"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/skybori"
         android:text="서버로 보내기"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,9 +30,11 @@
 
     <Button
         android:id="@+id/galleryBtn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="114dp"
+        android:layout_height="48dp"
         android:layout_gravity="center"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/skybori"
         android:text="사진첩 열기"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -47,10 +55,13 @@
 
     <Button
         android:id="@+id/cameraBtn"
-        android:layout_width="139dp"
-        android:layout_height="46dp"
+        android:layout_width="114dp"
+        android:layout_height="39dp"
         android:layout_marginTop="17dp"
         android:layout_marginBottom="143dp"
+        android:background="@drawable/round_button"
+        android:fontFamily="@font/skybori"
+        android:textSize="20sp"
         android:text="카메라"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
