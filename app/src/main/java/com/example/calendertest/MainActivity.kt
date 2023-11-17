@@ -4,15 +4,15 @@ import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
+import android.widget.EditText
 import android.widget.TextView
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
@@ -23,6 +23,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var imgBtn: Button
     lateinit var textBtn: Button
     lateinit var navigationView: BottomNavigationView
+    lateinit var contextEditText: EditText
     private val REQUEST_PERMISSIONS=1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -34,13 +35,21 @@ class MainActivity : AppCompatActivity() {
         navigationView = findViewById(R.id.navigationView)
         imgBtn=findViewById(R.id.imgBtn)
         textBtn=findViewById(R.id.textBtn)
+        contextEditText=findViewById(R.id.contextEditText);
         checkPermission()
+
         calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
             diaryTextView.visibility = View.VISIBLE
             imgBtn.visibility = View.VISIBLE
             textBtn.visibility = View.VISIBLE
+            contextEditText.setVisibility(View.VISIBLE);
             diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
+            contextEditText.setText("");
         }
+
+
+
+
         navigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.calenderFragment -> {
@@ -91,7 +100,7 @@ class MainActivity : AppCompatActivity() {
             grantResults.forEach {
                 if(it == PackageManager.PERMISSION_DENIED) {
                     Toast.makeText(applicationContext, "서비스의 필요한 권한입니다.\n권한에 동의해주세요.", Toast.LENGTH_SHORT).show()
-                    finish()
+                    //finish()
                 }
             }
         }

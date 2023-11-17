@@ -47,11 +47,14 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-
+    implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
+    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.android.volley:volley:1.2.1'
     testImplementation 'junit:junit:4.13.2'
     //라이브러리 등록
     implementation 'com.github.bumptech.glide:glide:4.15.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1' // OkHttp 버전은 필요에 따라 조정
+    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    androidTestImplementation 'junit:junit:4.12'// OkHttp 버전은 필요에 따라 조정
 
 
 

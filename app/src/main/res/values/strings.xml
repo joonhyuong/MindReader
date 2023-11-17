@@ -2,4 +2,6 @@
     <string name="app_name">Calender Test</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="baseUrl">http://211.248.178.162:33060</string>
+
 </resources>

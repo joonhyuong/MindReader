@@ -57,6 +57,10 @@ class ImgActivity : AppCompatActivity() {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
         }
+        binding.resultBtn.setOnClickListener{
+            val intent = Intent(this, ResultActivity::class.java)
+            startActivity(intent)
+        }
 
 
 
@@ -90,7 +94,7 @@ class ImgActivity : AppCompatActivity() {
 
     // 이미지 업로드 함수
     private fun uploadImageToServer(imageUri: Uri) {
-        val serverURL = "http://192.168.25.3:5000/upload" // 서버 업로드 URL
+        val serverURL = "http://211.248.178.162:33060/upload" // 서버 업로드 URL
         val client = OkHttpClient()
 
         // 이미지 파일을 실제 경로로 변환
