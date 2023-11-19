@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace 'com.example.calendertest'
-    compileSdk 33
+    compileSdk 34
 
     defaultConfig {
         applicationId "com.example.calendertest"
@@ -39,22 +39,22 @@ android {
 
 dependencies {
 
-    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.core:core-ktx:1.12.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
-    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'com.google.android.material:material:1.10.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     // app/build.gradle 파일에 의존성을 추가합니다.
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     implementation "com.squareup.retrofit2:converter-moshi:2.9.0"
-    implementation 'com.google.code.gson:gson:2.8.8'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation 'com.android.volley:volley:1.2.1'
     testImplementation 'junit:junit:4.13.2'
     //라이브러리 등록
     implementation 'com.github.bumptech.glide:glide:4.15.1'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
-    androidTestImplementation 'junit:junit:4.12'// OkHttp 버전은 필요에 따라 조정
+    implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
+    androidTestImplementation 'junit:junit:4.13.2'// OkHttp 버전은 필요에 따라 조정
 
 
 

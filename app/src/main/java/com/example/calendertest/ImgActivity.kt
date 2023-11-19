@@ -18,7 +18,9 @@ import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.calendertest.databinding.ActivityImgBinding
 import android.provider.MediaStore
+import android.view.View
 import com.google.android.material.bottomnavigation.BottomNavigationView
+
 
 
 class ImgActivity : AppCompatActivity() {
@@ -33,6 +35,8 @@ class ImgActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         navigationView = findViewById(R.id.navigationView)
+
+
 
         navigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -57,25 +61,19 @@ class ImgActivity : AppCompatActivity() {
             val intent = Intent(this, CameraActivity::class.java)
             startActivity(intent)
         }
-        binding.resultBtn.setOnClickListener{
-            val intent = Intent(this, ResultActivity::class.java)
-            startActivity(intent)
-        }
 
-
-
-        // 버튼 이벤트: 갤러리 호출
         binding.galleryBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
             activityResult.launch(intent)
         }
 
-        // 버튼 이벤트: 이미지 업로드
         binding.galleryBtn2.setOnClickListener {
             if (selectedImageUri != null) {
-                // 이미지 업로드 함수 호출
                 uploadImageToServer(selectedImageUri!!)
+
+                // resultBtn 보이기
+
             } else {
                 Toast.makeText(this, "이미지를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
             }
@@ -92,17 +90,14 @@ class ImgActivity : AppCompatActivity() {
         }
     }
 
-    // 이미지 업로드 함수
     private fun uploadImageToServer(imageUri: Uri) {
-        val serverURL = "http://211.248.178.162:33060/upload" // 서버 업로드 URL
+        val serverURL = "http://192.168.25.2:5000/upload"
         val client = OkHttpClient()
 
-        // 이미지 파일을 실제 경로로 변환
         val realPath = getRealPathFromURI(imageUri)
 
         if (realPath != null) {
             val file = File(realPath)
-
             val requestFile = RequestBody.create("image/*".toMediaType(), file)
 
             val requestBody = MultipartBody.Builder()
@@ -126,6 +121,9 @@ class ImgActivity : AppCompatActivity() {
                     if (response.isSuccessful) {
                         runOnUiThread {
                             Toast.makeText(applicationContext, "업로드 성공", Toast.LENGTH_SHORT).show()
+                            val intent = Intent(this@ImgActivity, ResultActivity::class.java)
+                            startActivity(intent)
+
                         }
                     } else {
                         runOnUiThread {
@@ -139,7 +137,6 @@ class ImgActivity : AppCompatActivity() {
         }
     }
 
-    // 이미지 Uri를 실제 경로로 변환
     private fun getRealPathFromURI(uri: Uri): String? {
         val cursor = contentResolver.query(uri, null, null, null, null)
         cursor?.use {
@@ -150,3 +147,4 @@ class ImgActivity : AppCompatActivity() {
         return null
     }
 }
+

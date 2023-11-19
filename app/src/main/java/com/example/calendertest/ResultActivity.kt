@@ -22,7 +22,7 @@ class ResultActivity : AppCompatActivity() {
 
 
         val queue = Volley.newRequestQueue(this)
-        val url = "http://211.248.178.162:33060/get_recommended_books" // 실제 서버 URL로 변경
+        val url = "http://192.168.25.2:5000/get_recommended_books" // 실제 서버 URL로 변경
 
         val jsonArrayRequest = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener<JSONArray> { response ->

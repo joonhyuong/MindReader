@@ -31,20 +31,12 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         calendarView=findViewById(R.id.calendarView)
-        diaryTextView=findViewById(R.id.diaryTextView)
         navigationView = findViewById(R.id.navigationView)
         imgBtn=findViewById(R.id.imgBtn)
-        textBtn=findViewById(R.id.textBtn)
-        contextEditText=findViewById(R.id.contextEditText);
         checkPermission()
 
         calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
-            diaryTextView.visibility = View.VISIBLE
             imgBtn.visibility = View.VISIBLE
-            textBtn.visibility = View.VISIBLE
-            contextEditText.setVisibility(View.VISIBLE);
-            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
-            contextEditText.setText("");
         }
 
 
@@ -55,15 +47,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.calenderFragment -> {
                     val intent = Intent(this@MainActivity, MainActivity::class.java)
                     startActivity(intent)
-                    // "캘린더" 아이템이 선택되었을 때 처리할 코드를 여기에 추가합니다.
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.homeFragment -> {
-                    // "히스토리" 아이템을 처리하는 코드를 추가하세요.
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.myPageFragment -> {
-                    // "설정" 아이템을 처리하는 코드를 추가하세요.
                     return@setOnNavigationItemSelectedListener true
                 }
             }

@@ -8,8 +8,8 @@
 
     <include
         layout="@layout/bottom_navigation_layout"
-        tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-16dp" />
+        tools:layout_editor_absoluteX="91dp"
+        tools:layout_editor_absoluteY="80dp" />
 
     <Button
         android:id="@+id/galleryBtn2"
@@ -22,16 +22,15 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.888" />
-
+        app:layout_constraintVertical_bias="0.842" />
 
     <Button
         android:id="@+id/galleryBtn"
-        android:layout_width="114dp"
-        android:layout_height="48dp"
+        android:layout_width="126dp"
+        android:layout_height="47dp"
         android:layout_gravity="center"
         android:background="@drawable/round_button"
         android:fontFamily="@font/skybori"
@@ -39,9 +38,10 @@
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.194"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.697" />
+        app:layout_constraintVertical_bias="0.704" />
 
     <ImageView
         android:id="@+id/imageView"
@@ -55,34 +55,19 @@
 
     <Button
         android:id="@+id/cameraBtn"
-        android:layout_width="114dp"
-        android:layout_height="39dp"
+        android:layout_width="122dp"
+        android:layout_height="45dp"
         android:layout_marginTop="17dp"
-        android:layout_marginBottom="143dp"
         android:background="@drawable/round_button"
         android:fontFamily="@font/skybori"
-        android:textSize="20sp"
         android:text="카메라"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/galleryBtn" />
-
-    <Button
-        android:id="@+id/resultBtn"
-        android:layout_width="114dp"
-        android:layout_height="48dp"
-        android:layout_gravity="center"
-        android:background="@drawable/round_button"
-        android:fontFamily="@font/skybori"
-        android:text="결과보기"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.053"
+        app:layout_constraintHorizontal_bias="0.858"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.696" />
+        app:layout_constraintVertical_bias="0.69" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
