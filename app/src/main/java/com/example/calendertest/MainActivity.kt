@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
@@ -14,12 +15,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.io.BufferedReader
+import java.io.FileInputStream
+import java.io.IOException
+import java.io.InputStreamReader
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var calendarView: CalendarView
     lateinit var diaryTextView: TextView
+    lateinit var selectedDateTextView: TextView
     lateinit var imgBtn: Button
     lateinit var textBtn: Button
     lateinit var navigationView: BottomNavigationView
@@ -29,17 +35,49 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
         calendarView=findViewById(R.id.calendarView)
         navigationView = findViewById(R.id.navigationView)
+        selectedDateTextView = findViewById(R.id.selectedDateTextView)
         imgBtn=findViewById(R.id.imgBtn)
         checkPermission()
 
-        calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
-            imgBtn.visibility = View.VISIBLE
+        fun readTextFromFile(fileName: String): String {
+            return try {
+                val inputStream: FileInputStream = openFileInput(fileName)
+                val inputStreamReader = InputStreamReader(inputStream)
+                val bufferedReader = BufferedReader(inputStreamReader)
+                val stringBuilder = StringBuilder()
+                var text: String?
+
+                while (bufferedReader.readLine().also { text = it } != null) {
+                    stringBuilder.append(text)
+                }
+                inputStream.close()
+                stringBuilder.toString()
+            } catch (e: IOException) {
+                e.printStackTrace()
+                "파일을 읽어오는 데 문제가 발생했습니다."
+            }
         }
 
 
+
+//        val diaryTextView: TextView = findViewById(R.id.diaryTextView)
+//        diaryTextView.text = textFromFile
+
+        calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
+            imgBtn.visibility = View.VISIBLE
+            val selectedDate = "$year-${month + 1}-$dayOfMonth"
+            val fileName = "$selectedDate.txt"
+            Log.d("MainActivity", "Selected date's file name: $fileName")
+
+
+            // 파일명으로부터 내용 읽어오기
+            val fileContent = readTextFromFile(fileName)
+            Log.d("MainActivity", "File content for $fileName: $fileContent")
+            // 읽어온 파일 내용을 TextView에 표시
+            selectedDateTextView.text = fileContent
+        }
 
 
         navigationView.setOnNavigationItemSelectedListener { item ->

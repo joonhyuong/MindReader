@@ -1,5 +1,6 @@
 package com.example.calendertest
 
+import android.content.Context
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
@@ -13,19 +14,26 @@ import android.os.Bundle
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
 import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.example.calendertest.databinding.ActivityImgBinding
 import android.provider.MediaStore
 import android.view.View
+import android.widget.ImageView
+import androidx.core.content.FileProvider
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
+import java.io.ByteArrayOutputStream
+import java.io.FileOutputStream
 
 
 class ImgActivity : AppCompatActivity() {
     private lateinit var binding: ActivityImgBinding
+    private lateinit var galleryImageView: ImageView
+    private lateinit var cameraImageView: ImageView
     private lateinit var navigationView: BottomNavigationView
+
 
     private var selectedImageUri: Uri? = null // 이미지 Uri를 저장할 변수
 
@@ -33,6 +41,9 @@ class ImgActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityImgBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        galleryImageView = findViewById(R.id.galleryimageView)  // 갤러리 이미지를 보여줄 ImageView
+        cameraImageView = findViewById(R.id.cameraimageView)  // 카메라 이미지를 보여줄 ImageView
 
         navigationView = findViewById(R.id.navigationView)
 
@@ -58,40 +69,55 @@ class ImgActivity : AppCompatActivity() {
         }
 
         binding.cameraBtn.setOnClickListener{
-            val intent = Intent(this, CameraActivity::class.java)
-            startActivity(intent)
+            val intent: Intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+            activityResultCamera.launch(intent)
         }
 
         binding.galleryBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
             intent.type = "image/*"
-            activityResult.launch(intent)
+            activityResultGallery.launch(intent)
         }
 
         binding.galleryBtn2.setOnClickListener {
             if (selectedImageUri != null) {
                 uploadImageToServer(selectedImageUri!!)
-
-                // resultBtn 보이기
-
+                galleryImageView.setImageURI(selectedImageUri)  // 갤러리에서 선택한 이미지를 보여줄 ImageView에 설정
             } else {
                 Toast.makeText(this, "이미지를 먼저 선택해주세요.", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
-    private val activityResult = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+    private val activityResultGallery = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK && result.data != null) {
             val uri = result.data!!.data
             selectedImageUri = uri // 선택한 이미지의 Uri를 저장
-            Glide.with(this)
-                .load(uri)
-                .into(binding.imageView)
+            cameraImageView.setImageURI(selectedImageUri)
+//            Glide.with(this)
+//                .load(uri)
+//                .into(galleryImageView)  // 갤러리에서 선택한 이미지를 보여줄 ImageView에 설정
         }
     }
 
+    private val activityResultCamera = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK && result.data != null) {
+            val imageBitmap = result.data?.extras?.get("data") as Bitmap
+            selectedImageUri = getImageUri(this, imageBitmap)
+            cameraImageView.setImageURI(selectedImageUri)
+        }
+    }
+    fun getImageUri(context: Context, inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(context.contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
+    }
+
+
+
     private fun uploadImageToServer(imageUri: Uri) {
-        val serverURL = "http://192.168.25.2:5000/upload"
+        val serverURL = "http://222.102.184.24:80/upload"
         val client = OkHttpClient()
 
         val realPath = getRealPathFromURI(imageUri)
