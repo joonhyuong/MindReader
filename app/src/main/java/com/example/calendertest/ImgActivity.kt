@@ -75,8 +75,8 @@ class ImgActivity : AppCompatActivity() {
 
         binding.galleryBtn.setOnClickListener {
             val intent = Intent(Intent.ACTION_PICK)
-            intent.type = "image/*"
-            activityResultGallery.launch(intent)
+                    intent.type = "image/*"
+                    activityResultGallery.launch(intent)
         }
 
         binding.galleryBtn2.setOnClickListener {
