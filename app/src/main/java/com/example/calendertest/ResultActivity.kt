@@ -36,7 +36,7 @@ class ResultActivity : AppCompatActivity() {
         booksTextView = findViewById(R.id.booksTextView)
         saveBtn = findViewById(R.id.savebtn)
         val queue = Volley.newRequestQueue(this)
-        val url = "http://222.102.184.24:80/get_recommended_books" // 실제 서버 URL로 변경
+        val url = "http://222.102.167.119:5000/get_recommended_books" // 실제 서버 URL로 변경
 
         val jsonArrayRequest = JsonArrayRequest(Request.Method.GET, url, null,
             Response.Listener<JSONArray> { response ->
@@ -50,18 +50,20 @@ class ResultActivity : AppCompatActivity() {
                         try {
                             val bookInfo = response.getString(i)
                             when (i) {
-                                0 -> booksText += "제목: $bookInfo\n\n"
-                                1 -> booksText += "저자: $bookInfo\n\n"
+                                0 -> booksText += "제목: $bookInfo\n\n "
+                                1 -> booksText += "저자: $bookInfo\n\n "
                                 2 -> {
                                     val imageUrl = bookInfo // 이 부분은 실제 URL 가져오는 로직으로 대체되어야 합니다
                                     Glide.with(this)
                                         .load(imageUrl)
                                         .into(imageView)
                                 }
-                                3 -> booksText += "구매링크: $bookInfo\n\n"
-                                4 -> booksText += "가격: $bookInfo\n\n"
-                                5 -> booksText += "카테고리: $bookInfo\n\n"
-                                6 -> booksText += "감정: $bookInfo\n\n"
+                                3 -> booksText += "구매링크: $bookInfo\n\n "
+                                4 -> booksText += "가격: $bookInfo "
+                                5 -> booksText += String.format("%35s\n", "카테고리: $bookInfo\n ")
+                                6 -> booksText += "감정: $bookInfo\n\n "
+                                7 -> booksText += "글귀 : $bookInfo\n "
+                                8 -> booksText += String.format("%50s\n", "-$bookInfo-")
                             }
                         } catch (e: JSONException) {
                             e.printStackTrace()
@@ -90,11 +92,10 @@ class ResultActivity : AppCompatActivity() {
              val year = calendar.get(Calendar.YEAR)
              val month = calendar.get(Calendar.MONTH)
              val day = calendar.get(Calendar.DAY_OF_MONTH)
-             val textToSave = booksTextView.text.toString()
 
              fun saveTextToFile(text: String, fileName: String): Boolean {
                  return try {
-                     val outputStream: FileOutputStream = openFileOutput(fileName, Context.MODE_APPEND)
+                     val outputStream: FileOutputStream = openFileOutput(fileName, Context.MODE_PRIVATE)
                      outputStream.write(text.toByteArray())
                      outputStream.close()
                      Log.d("ResultActivity", "Text saved to $fileName: $text") // 추가된 로그

@@ -117,7 +117,7 @@ class ImgActivity : AppCompatActivity() {
 
 
     private fun uploadImageToServer(imageUri: Uri) {
-        val serverURL = "http://222.102.184.24:80/upload"
+        val serverURL = "http://222.102.167.119:5000/upload"
         val client = OkHttpClient()
 
         val realPath = getRealPathFromURI(imageUri)

@@ -3,6 +3,7 @@ package com.example.calendertest
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.media.Image
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +11,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.CalendarView
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -19,13 +21,15 @@ import java.io.BufferedReader
 import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStreamReader
+import java.util.Calendar
 
 
 class MainActivity : AppCompatActivity() {
 
     lateinit var calendarView: CalendarView
-    lateinit var diaryTextView: TextView
+    lateinit var EmojiView: ImageView
     lateinit var selectedDateTextView: TextView
+    lateinit var diaryTextView: TextView
     lateinit var imgBtn: Button
     lateinit var textBtn: Button
     lateinit var navigationView: BottomNavigationView
@@ -38,9 +42,19 @@ class MainActivity : AppCompatActivity() {
         calendarView=findViewById(R.id.calendarView)
         navigationView = findViewById(R.id.navigationView)
         selectedDateTextView = findViewById(R.id.selectedDateTextView)
+        EmojiView = findViewById(R.id.emojiView)
         imgBtn=findViewById(R.id.imgBtn)
+        diaryTextView = findViewById(R.id.diaryTextView)
         checkPermission()
 
+        //오늘 날짜를 기본값으로 설정
+        val today = Calendar.getInstance()
+        val year = today.get(Calendar.YEAR)
+        val month = today.get(Calendar.MONTH)
+        val dayOfMonth = today.get(Calendar.DAY_OF_MONTH)
+        diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
+
+        //txt 파일 읽어오기
         fun readTextFromFile(fileName: String): String {
             return try {
                 val inputStream: FileInputStream = openFileInput(fileName)
@@ -60,23 +74,46 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        //원하는 부분 추출
+        fun extractEmotionFromFileContent(fileContent: String): String {
+            val emotionRegex = Regex("감정\\s*(.+) 글귀") // 감정 부분부터 글귀 전 부분까지 추출
 
+            val matchResult = emotionRegex.find(fileContent)
+            return matchResult?.groupValues?.get(1) ?: "일기가 등록되지 않았습니다."
+        }
 
 //        val diaryTextView: TextView = findViewById(R.id.diaryTextView)
 //        diaryTextView.text = textFromFile
 
         calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
             imgBtn.visibility = View.VISIBLE
+            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth) //날짜 표시
+
+            //CalenderView에서 선택한 날짜와 동일한 txt파일 탐색
             val selectedDate = "$year-${month + 1}-$dayOfMonth"
             val fileName = "$selectedDate.txt"
             Log.d("MainActivity", "Selected date's file name: $fileName")
-
 
             // 파일명으로부터 내용 읽어오기
             val fileContent = readTextFromFile(fileName)
             Log.d("MainActivity", "File content for $fileName: $fileContent")
             // 읽어온 파일 내용을 TextView에 표시
-            selectedDateTextView.text = fileContent
+            val fileContent2 = extractEmotionFromFileContent(fileContent)
+            selectedDateTextView.text = fileContent2
+
+            //
+            val drawableRes = when (fileContent2) {
+                "기쁨" -> R.drawable.happy
+                "슬픔" -> R.drawable.sorrow
+                "놀람" -> R.drawable.suprise
+                "분노" -> R.drawable.anger
+                "공포" -> R.drawable.fear
+                "혐오" -> R.drawable.hatred
+
+                else -> com.google.android.material.R.drawable.m3_tabs_transparent_background // 감정 정보를 찾을 수 없는 경우 기본 이미지 설정
+            }
+
+            EmojiView.setImageResource(drawableRes)
         }
 
 
