@@ -18,7 +18,7 @@
         android:layout_gravity="center"
         android:background="@drawable/round_button"
         android:fontFamily="@font/skybori"
-        android:text="서버로 보내기"
+        android:text="일기 분석"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

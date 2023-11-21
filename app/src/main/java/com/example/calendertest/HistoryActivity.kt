@@ -21,8 +21,8 @@ class HistoryActivity : AppCompatActivity(), FileNameAdapter.OnItemClickListener
         // 파일 이름 목록을 순회하며 각 파일의 내용을 읽어옴
         fileNamesFromStorage.forEach { fileName ->
             val firstLine = FileHelper.getFirstLineOfFileContent(this, fileName)
-            val sixLine = FileHelper.getSpecificLineOfFileContent(this, fileName, 7)
-            val fileData = Pair(fileName, sixLine)
+            val Line = FileHelper.getSpecificLineOfFileContent(this, fileName, 9)
+            val fileData = Pair(fileName, Line)
             // 파일 이름, 첫 번째 줄, 마지막 줄을 쌍으로 묶어 리스트에 추가
             fileDataList.add(fileData)
         }
