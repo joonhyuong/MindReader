@@ -40,6 +40,11 @@
                     android:exported="true"/>
         <activity android:name=".ResultActivity"
             android:exported="true"/>
+        <activity android:name=".HistoryActivity"
+            android:exported="true"/>
+        <activity android:name=".MemoryActivity"
+            android:exported="true"/>
+
     </application>
 
 </manifest>

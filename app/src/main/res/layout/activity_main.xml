@@ -11,7 +11,8 @@
         android:id="@+id/include3"
         layout="@layout/bottom_navigation_layout"
         tools:layout_editor_absoluteX="0dp"
-        tools:layout_editor_absoluteY="-16dp" />
+        tools:layout_editor_absoluteY="1dp" />
+
 
     <Button
         android:id="@+id/imgBtn"
@@ -24,57 +25,63 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.66" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.869" />
 
+    +
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendarView"
+        android:layout_width="302dp"
+        android:layout_height="346dp"
+        android:theme="@style/CalenderViewCustom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.495"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.114"
+        app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+        app:mcv_selectionColor="@color/green"
+        app:mcv_tileSize="45dp"
+        app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
     <TextView
         android:id="@+id/selectedDateTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="88dp"
         android:fontFamily="@font/skybori"
-        android:textSize="20sp"
         android:text="Selected Date"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="@+id/include3"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView" />
-
-    <CalendarView
-        android:id="@+id/calendarView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.491"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.106" />
+        app:layout_constraintTop_toTopOf="@+id/include3"
+        app:layout_constraintVertical_bias="0.684" />
 
     <ImageView
         android:id="@+id/emojiView"
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:layout_marginTop="49dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="@+id/include3"
+        app:layout_constraintVertical_bias="0.727" />
 
     <TextView
         android:id="@+id/diaryTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/skybori"
-        android:text="TextView"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calendarView"
-        app:layout_constraintVertical_bias="0.033" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.616" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,11 +1,14 @@
 package com.example.calendertest
 
 import android.Manifest
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.media.Image
 import android.os.Build
 import android.os.Bundle
+import android.text.style.ForegroundColorSpan
 import android.util.Log
 import android.view.View
 import android.widget.Button
@@ -22,18 +25,29 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStreamReader
 import java.util.Calendar
+import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
+import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
+import com.prolificinteractive.materialcalendarview.OnRangeSelectedListener;
+import com.prolificinteractive.materialcalendarview.format.ArrayWeekDayFormatter;
+import com.prolificinteractive.materialcalendarview.format.MonthArrayTitleFormatter;
+import com.prolificinteractive.materialcalendarview.format.TitleFormatter;
 
+
+
+import org.threeten.bp.DayOfWeek;
+import org.threeten.bp.LocalDate;
+import org.threeten.bp.temporal.TemporalAdjusters
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var calendarView: CalendarView
+    lateinit var calendarView: MaterialCalendarView
     lateinit var EmojiView: ImageView
     lateinit var selectedDateTextView: TextView
     lateinit var diaryTextView: TextView
     lateinit var imgBtn: Button
-    lateinit var textBtn: Button
     lateinit var navigationView: BottomNavigationView
-    lateinit var contextEditText: EditText
     private val REQUEST_PERMISSIONS=1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,12 +61,37 @@ class MainActivity : AppCompatActivity() {
         diaryTextView = findViewById(R.id.diaryTextView)
         checkPermission()
 
+        // 월, 요일을 한글로 설정
+        calendarView.setTitleFormatter(MonthArrayTitleFormatter(resources.getTextArray(R.array.custom_months)))
+        calendarView.setWeekDayFormatter(ArrayWeekDayFormatter(resources.getTextArray(R.array.custom_weekdays)))
+        calendarView.setHeaderTextAppearance(R.style.CalendarWidgetHeader)// 좌우 화살표 사이 연, 월의 폰트 스타일 설정
+
+
+        // 좌우 화살표 가운데의 연/월이 보이는 방식을 커스텀
+        calendarView.setTitleFormatter(object : TitleFormatter {
+            override fun format(day: CalendarDay): CharSequence {
+                val inputText = day.date
+                val calendarHeaderElements = inputText.toString().split("-")
+                val calendarHeaderBuilder = StringBuilder()
+                calendarHeaderBuilder.append(calendarHeaderElements[0])
+                    .append(" ")
+                    .append(calendarHeaderElements[1])
+                return calendarHeaderBuilder.toString()
+            }
+        })
+
+        val saturdayDecorator = SaturdayDecorator()
+        val sundayDecorator = SundayDecorator()
+        val todayDecorator = TodayDecorator()
+        calendarView.addDecorators(saturdayDecorator,sundayDecorator, todayDecorator)
+
         //오늘 날짜를 기본값으로 설정
         val today = Calendar.getInstance()
         val year = today.get(Calendar.YEAR)
         val month = today.get(Calendar.MONTH)
         val dayOfMonth = today.get(Calendar.DAY_OF_MONTH)
-        diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth)
+        diaryTextView.visibility = View.GONE
+        diaryTextView.text = String.format("%d / %d / %d", year, month + 1 , dayOfMonth)
 
         //txt 파일 읽어오기
         fun readTextFromFile(fileName: String): String {
@@ -76,32 +115,33 @@ class MainActivity : AppCompatActivity() {
 
         //원하는 부분 추출
         fun extractEmotionFromFileContent(fileContent: String): String {
-            val emotionRegex = Regex("감정\\s*(.+) 글귀") // 감정 부분부터 글귀 전 부분까지 추출
+            val emotionRegex = Regex("감정:\\s*(.+) 글귀") // 감정 부분부터 글귀 전 부분까지 추출
 
             val matchResult = emotionRegex.find(fileContent)
             return matchResult?.groupValues?.get(1) ?: "일기가 등록되지 않았습니다."
         }
 
-//        val diaryTextView: TextView = findViewById(R.id.diaryTextView)
-//        diaryTextView.text = textFromFile
-
-        calendarView.setOnDateChangeListener {view, year, month, dayOfMonth ->
+        calendarView.setOnDateChangedListener { widget, date, selected ->
             imgBtn.visibility = View.VISIBLE
-            diaryTextView.text = String.format("%d / %d / %d", year, month + 1, dayOfMonth) //날짜 표시
 
-            //CalenderView에서 선택한 날짜와 동일한 txt파일 탐색
-            val selectedDate = "$year-${month + 1}-$dayOfMonth"
-            val fileName = "$selectedDate.txt"
+            val year = date.year
+            val month = date.month
+            val dayOfMonth = date.day
+
+            diaryTextView.text = String.format("%d / %d / %d", year, month, dayOfMonth) // 날짜 표시
+
+            val selectedDate = "$year 년 ${month} 월 $dayOfMonth 일"
+            val fileName = "$selectedDate"
             Log.d("MainActivity", "Selected date's file name: $fileName")
 
             // 파일명으로부터 내용 읽어오기
             val fileContent = readTextFromFile(fileName)
             Log.d("MainActivity", "File content for $fileName: $fileContent")
+
             // 읽어온 파일 내용을 TextView에 표시
             val fileContent2 = extractEmotionFromFileContent(fileContent)
             selectedDateTextView.text = fileContent2
 
-            //
             val drawableRes = when (fileContent2) {
                 "기쁨" -> R.drawable.happy
                 "슬픔" -> R.drawable.sorrow
@@ -109,13 +149,11 @@ class MainActivity : AppCompatActivity() {
                 "분노" -> R.drawable.anger
                 "공포" -> R.drawable.fear
                 "혐오" -> R.drawable.hatred
-
                 else -> com.google.android.material.R.drawable.m3_tabs_transparent_background // 감정 정보를 찾을 수 없는 경우 기본 이미지 설정
             }
 
             EmojiView.setImageResource(drawableRes)
         }
-
 
         navigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
@@ -125,6 +163,8 @@ class MainActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.homeFragment -> {
+                    val intent = Intent(this@MainActivity, HistoryActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.myPageFragment -> {
@@ -170,6 +210,38 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    class SaturdayDecorator: DayViewDecorator {
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            val sunday = day?.date?.with(DayOfWeek.SATURDAY)?.dayOfMonth
+            return sunday == day?.day
+        }
+        override fun decorate(view: DayViewFacade?) {
+            view?.addSpan(object: ForegroundColorSpan(Color.BLUE){})
+        }
+    }
+
+    class SundayDecorator : DayViewDecorator {
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            val sunday = day?.date?.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY))?.dayOfMonth
+            return sunday == day?.day
+        }
+
+        override fun decorate(view: DayViewFacade?) {
+            view?.addSpan(ForegroundColorSpan(Color.RED))
+        }
+    }
+
+    class TodayDecorator : DayViewDecorator {
+        private val today = CalendarDay.today()
+
+        override fun shouldDecorate(day: CalendarDay?): Boolean {
+            return day?.equals(today) ?: false
+        }
+
+        override fun decorate(view: DayViewFacade?) {
+            view?.addSpan(ForegroundColorSpan(Color.MAGENTA))
+        }
+    }
 }
 
 

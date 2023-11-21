@@ -56,6 +56,9 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:5.0.0-alpha.11'
     androidTestImplementation 'junit:junit:4.13.2'// OkHttp 버전은 필요에 따라 조정
 
+    //material 캘린더뷰
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.1'
+    implementation 'com.jakewharton.threetenabp:threetenabp:1.2.1'
 
 
 }
