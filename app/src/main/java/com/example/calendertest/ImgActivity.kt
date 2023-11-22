@@ -28,7 +28,7 @@ import java.io.ByteArrayOutputStream
 import java.io.FileOutputStream
 
 
-class ImgActivity : AppCompatActivity() {
+class ImgActivity : BaseActivity() {
     private lateinit var binding: ActivityImgBinding
     private lateinit var galleryImageView: ImageView
     private lateinit var cameraImageView: ImageView
@@ -52,16 +52,18 @@ class ImgActivity : AppCompatActivity() {
         navigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.calenderFragment -> {
-                    val intent = Intent(this, MainActivity::class.java)
+                    val intent = Intent(this@ImgActivity, MainActivity::class.java)
                     startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.homeFragment -> {
-                    // "히스토리" 아이템을 처리하는 코드를 추가하세요.
+                    val intent = Intent(this@ImgActivity, HistoryActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.myPageFragment -> {
-                    // "설정" 아이템을 처리하는 코드를 추가하세요.
+                    val intent = Intent(this@ImgActivity, SettingsActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
             }

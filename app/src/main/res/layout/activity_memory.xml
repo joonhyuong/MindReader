@@ -14,17 +14,18 @@
         <TextView
             android:id="@+id/fileNameTextView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="36dp"
             android:fontFamily="@font/skybori"
-            android:textSize="16sp"
-            android:text="File Name" />
+            android:text="File Name"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/fileInfoTextView2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="275dp"
             android:fontFamily="@font/skybori"
-            android:text="Additional Info" />
+            android:text="Additional Info"
+            android:textSize="16sp" />
 
     </LinearLayout>
 

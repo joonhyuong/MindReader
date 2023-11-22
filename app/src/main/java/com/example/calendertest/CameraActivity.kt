@@ -16,7 +16,7 @@ import java.io.IOException
 import android.widget.Toast
 import android.util.Base64
 
-class CameraActivity : AppCompatActivity() {
+class CameraActivity : BaseActivity() {
     lateinit var bitmap: Bitmap
     lateinit var imageView: ImageView
 

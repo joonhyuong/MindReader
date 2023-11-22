@@ -6,6 +6,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -25,7 +26,7 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.Calendar
 
-class ResultActivity : AppCompatActivity() {
+class ResultActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class ResultActivity : AppCompatActivity() {
         selectedDateTextView = findViewById(R.id.selectedDateTextView)
         booksTextView = findViewById(R.id.booksTextView)
         saveBtn = findViewById(R.id.savebtn)
+        selectedDateTextView.visibility = View.GONE
         val queue = Volley.newRequestQueue(this)
         val url = "http://222.102.167.119:5000/get_recommended_books" // 실제 서버 URL로 변경
 
@@ -55,6 +57,8 @@ class ResultActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.myPageFragment -> {
+                    val intent = Intent(this@ResultActivity, SettingsActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
             }
@@ -74,8 +78,8 @@ class ResultActivity : AppCompatActivity() {
                         try {
                             val bookInfo = response.getString(i)
                             when (i) {
-                                0 -> booksText += "제목: $bookInfo\n\n "
-                                1 -> booksText += "저자: $bookInfo\n\n "
+                                0 -> booksText += "제목: $bookInfo "
+                                1 -> booksText += String.format("%25s\n","저자: $bookInfo\n")
                                 2 -> {
                                     val imageUrl = bookInfo
                                     Glide.with(this)

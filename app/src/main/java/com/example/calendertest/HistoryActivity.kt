@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
-class HistoryActivity : AppCompatActivity(), FileNameAdapter.OnItemClickListener {
+class HistoryActivity : BaseActivity(), FileNameAdapter.OnItemClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
@@ -21,7 +21,7 @@ class HistoryActivity : AppCompatActivity(), FileNameAdapter.OnItemClickListener
         // 파일 이름 목록을 순회하며 각 파일의 내용을 읽어옴
         fileNamesFromStorage.forEach { fileName ->
             val firstLine = FileHelper.getFirstLineOfFileContent(this, fileName)
-            val Line = FileHelper.getSpecificLineOfFileContent(this, fileName, 9)
+            val Line = FileHelper.getSpecificLineOfFileContent(this, fileName, 7)
             val fileData = Pair(fileName, Line)
             // 파일 이름, 첫 번째 줄, 마지막 줄을 쌍으로 묶어 리스트에 추가
             fileDataList.add(fileData)
@@ -41,11 +41,13 @@ class HistoryActivity : AppCompatActivity(), FileNameAdapter.OnItemClickListener
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.homeFragment -> {
-                    // Stay in the same activity
+                    val intent = Intent(this, HistoryActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.myPageFragment -> {
-                    // Handle myPageFragment
+                    val intent = Intent(this, SettingsActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
             }

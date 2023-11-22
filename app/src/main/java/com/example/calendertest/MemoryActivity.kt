@@ -10,7 +10,7 @@ import java.io.FileInputStream
 import java.io.IOException
 import java.io.InputStreamReader
 
-class MemoryActivity : AppCompatActivity() {
+class MemoryActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

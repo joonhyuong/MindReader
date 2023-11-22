@@ -40,7 +40,7 @@ import org.threeten.bp.DayOfWeek;
 import org.threeten.bp.LocalDate;
 import org.threeten.bp.temporal.TemporalAdjusters
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
 
     lateinit var calendarView: MaterialCalendarView
     lateinit var EmojiView: ImageView
@@ -168,6 +168,8 @@ class MainActivity : AppCompatActivity() {
                     return@setOnNavigationItemSelectedListener true
                 }
                 R.id.myPageFragment -> {
+                    val intent = Intent(this@MainActivity, SettingsActivity::class.java)
+                    startActivity(intent)
                     return@setOnNavigationItemSelectedListener true
                 }
             }
